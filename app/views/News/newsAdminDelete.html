@@ -1,0 +1,94 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">admin:刪除新聞
+			</h1>
+		</div>
+		<!-- /.col-lg-12 -->
+	</div>
+	<!-- /.row -->
+	<div id="page-contain" >	
+		<table border="1"  class="table  table-hover table-row">
+	        <thead>
+	          <tr class="table-header">
+				<td class='title'>發布時間-起*</td>
+				<td class='title'>發布時間-迄*</td>
+				<td class='title'>訊息種類</td>
+				<td class='title'>操作</td>
+	            
+ 
+	          </tr>
+	        </thead>
+	        <tbody>
+	          <tr >
+	            <td>								
+					<input type="text" class="form-control textSize12"  
+					 datepicker-popup="yyyy-MM-dd HH:mm" show-button-bar='false' 
+					 ng-model="date.startDate"  is-open="startDate" ng-click = "startDate = true" />																		  
+				</td>
+	            <td>								
+					<input type="text" class="form-control textSize12" min-date="date.startDate"
+					  datepicker-popup="yyyy-MM-dd HH:mm" show-button-bar='false'
+					   ng-model="date.endDate"  is-open="endDate" ng-click = "endDate = true" />																		  
+				</td>
+	            <td>
+					<select class='form-control' ng-model="selectedCategory" 
+					ng-options="category.categoryName for category in
+					 categoryList track by category.categoryId"
+						 ></select>
+				 </td>
+				
+	            <td>                  	 
+					<button type="button" class="btn  btn-danger btn-sm" ng-click='releasedNewsByFlexibleSearch()' >查詢</button>            	
+				</td>
+	          </tr>	         
+	        </tbody>
+	      </table>
+	  
+		<br>		
+		<div class="col-lg-12" >
+			<div class="table-responsive">
+				<pagination ng-model="pageableDto.pageNumber" total-items="pageableDto.totalElements"
+				
+				items-per-page="pageableDto.size"
+				max-size="3" class="pagination-sm" boundary-links="true"
+				 rotate="false" previous-text="上一頁" next-text="下一頁" first-text="第一頁" 
+				 last-text="最後一頁" ng-change="changePage()"
+				 num-pages="pageableDto.totalPages"></pagination>
+				<pre>總筆數:{{pageableDto.totalElements}}，頁數: {{pageableDto.pageNumber}} / {{pageableDto.totalPages}}</pre>
+				<table class="table  table-hover table-row">
+					<tr>
+                       
+                        <td class='title'>序號</td>
+
+						<td class='title'>分類</td>
+						<td class='title'>標題</td>
+						<td class='title'>作者</td>
+						<td class='title'>公布時間</td>
+						<td class='title'>內文</td>
+						<td class='title'>發布中</td>
+
+					</tr>
+					<tr ng-repeat="data in pageableDto.content">
+                        <td >
+              	            <input type='checkbox' ng-model="data.isCheck"  > 
+						</td>
+						<td><span ng-bind="data.categoryName"></span></td>
+						<td><span ng-bind="data.title"></span></td>
+						<td><span ng-bind="data.author"></span></td>
+						<td><span ng-bind="data.createDate"></span></td>
+						<td><span ng-bind="data.text"></span></td>						 
+						<td><span >{{data.isRelease?"yes":"no"}}</span></td>
+
+					</tr>
+
+				</table>
+                <div class="col-lg-12 text-right">
+                    <button type="button" class="btn  btn-danger btn-sm" ng-click='deleteData()' >刪除</button>            	
+                </div>
+			</div>
+			<br>
+		</div>
+		
+	</div>
+</div>
